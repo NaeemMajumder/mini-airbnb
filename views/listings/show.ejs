@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Airbnb</title>
+</head>
+<body>
+    <h3>Listing Data</h3>
+
+    <ul>
+        <li><%= list.title  %></li>
+        <li><%= list.description  %></li>
+        <li> &#2547; <%= list.price.toLocaleString("en-BD")  %></li>
+        <li><%= list.location  %></li>
+        <li><%= list.country  %></li>
+    </ul>
+
+    <a href="/listing/<%= list._id  %>/edit">Edit Listing</a>
+
+    <br>
+    <br>
+
+    <form method="post" action="/listing/<%= list.id %>?_method=DELETE">
+        <button>Delete</button> 
+    </form>
+    
+</body>
+</html>

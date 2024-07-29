@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Airbnb</title>
+</head>
+<body>
+    <h3>Create New Listing</h3>
+
+    <form method="post" action="/listing">
+
+        <input type="text" name="title" placeholder="enter title">
+        
+        <br><br>
+
+        <textarea name="description" id="description" placeholder="enter description"></textarea>
+
+        <br><br>
+
+        <input type="text" name="image" placeholder="enter image URL/link">
+
+        <br><br>
+
+        <input type="number" name="price" placeholder="enter price">
+
+        <br><br>
+
+        <input type="text" name="location" placeholder="enter location">
+
+        <br><br>
+
+        <input type="text" name="country" placeholder="enter country">
+
+        <button>ADD</button>
+    </form>
+</body>
+</html>

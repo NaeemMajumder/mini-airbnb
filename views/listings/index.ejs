@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mini Airbnb</title>
+</head>
+<body>
+    <h3>All Listing</h3>
+    <form method="get" action="/listing/new">
+        <button>Create New listing</button>
+    </form>
+    <ul>
+        <% for(let list of listings) {%>
+        <li><a href="/listing/<%= list._id  %>"><%=list.title%></a></li>
+        <% } %>
+    </ul>
+</body>
+</html>

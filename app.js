@@ -22,6 +22,20 @@ app.get("/",(request,response)=>{
    response.send("work successfully");
 });
 
+// Testing Route
+app.get("/testListing",(request,response)=>{
+    let list1 = new Listing({
+        title:"Bosumoti Vila",
+        description:"In front of sea beach",
+        price:1000,
+        location:"cox's bazar",
+        country:"Bangladesh"
+    });
+
+    list1.save();
+    console.log(list1);
+    response.send("list successfully saved");
+})
 
 
 

@@ -2,19 +2,18 @@
 <body>
     <h3>All Listing</h3>
 
-    <% for(let list of listings) {%>
-    <div class="card" style="width: 18rem;">
-        <img src="<%= list.image  %>" class="card-img-top" alt="listing_image">
-        <div class="card-body">
-          <p class="card-text"><%=list.title%></p>
-          <p>&#2547; <%= list.price.toLocaleString("en-BD") %> / night</p>
-        </div>
-    </div>
-    <% } %>
-
-    <ul>
+    <div class="listing-card">
         <% for(let list of listings) {%>
-        <li><a href="/listing/<%= list._id  %>"><%=list.title%></a></li>
+        <a href="/listing/<%= list._id%>">
+            <div class="card" style="width: 20rem;">
+                <img src="<%= list.image  %>" class="card-img-top" alt="listing_image" style="height: 20rem;">
+                <div class="card-img-overlay">Picture</div>
+                <div class="card-body">
+                <p class="card-text"><strong><%=list.title%></strong></p>
+                <p>&#2547; <%= list.price.toLocaleString("en-BD") %> / night</p>
+                </div>
+            </div>
+        </a>
         <% } %>
-    </ul>
+    </div>
 </body>

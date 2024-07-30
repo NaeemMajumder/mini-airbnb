@@ -1,0 +1,49 @@
+/* body */
+body{
+    font-family: "Plus Jakarta Sans", sans-serif;
+}
+
+/* listing css */
+.listing-card{
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    column-gap: 5px;
+    row-gap: 20px;
+}
+.listing-card a{
+    text-decoration: none;
+}
+
+.card{
+    border: none;
+}
+
+.card-img-overlay{
+    height: 20rem;
+    opacity: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.5rem;
+    font-weight: 700;
+    color: rgba(255, 255, 255, 0.93);
+    transition-duration: 0.5s;
+}
+.card-img-overlay:hover{
+    opacity: 1;
+    background-color: rgba(255, 255, 255, 0.174);
+}
+
+/* image */
+.card-img-top{
+    border-radius: 1rem;
+    /* width: 100%; */
+}
+
+.card-body{
+    padding: 0;
+}
+.card-text p {
+    font-weight: 400;
+}

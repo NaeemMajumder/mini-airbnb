@@ -1,31 +1,42 @@
 <% layout("/layouts/boilerplate.ejs") %>
 <body>
-    <h3>Create New Listing</h3>
+    <h3 class="mt-5">Create New Listing</h3>
 
     <form method="post" action="/listing">
 
-        <input type="text" name="title" placeholder="enter title">
+        <div class="mb-3">
+            <label for="title" class="form-label">Title</label>
+            <input type="text" id="title" class="form-control" name="title" placeholder="enter title">
+        </div>
+
+        <div class="mb-3">
+            <label for="description" class="form-label">Description</label>
+            <textarea name="description" id="description" placeholder="enter description" class="form-control"></textarea>
+        </div>
+
+        <div class="mb-3">
+            <label for="image" class="form-label">Image</label>
+            <input type="text" id="image" class="form-control" name="image" placeholder="enter image URL/link">
+        </div>
+
+        <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input type="number" id="price" class="form-control" name="price" placeholder="enter price">
+        </div>
+
+        <div class="mb-3">
+            <label for="location" class="form-label">Location</label>
+            <input type="text" id="location" class="form-control" name="location" placeholder="enter location">
+        </div>
+
+        <div class="mb-3">
+            <label for="country" class="form-label">Country</label>
+            <input type="text" id="country" class="form-control" name="country" placeholder="enter country">
+        </div>
+
+        <br>
+        <br>
         
-        <br><br>
-
-        <textarea name="description" id="description" placeholder="enter description"></textarea>
-
-        <br><br>
-
-        <input type="text" name="image" placeholder="enter image URL/link">
-
-        <br><br>
-
-        <input type="number" name="price" placeholder="enter price">
-
-        <br><br>
-
-        <input type="text" name="location" placeholder="enter location">
-
-        <br><br>
-
-        <input type="text" name="country" placeholder="enter country">
-
-        <button>ADD</button>
+        <button class="btn btn-dark mb-5">ADD</button>
     </form>
 </body>

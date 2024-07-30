@@ -7,6 +7,15 @@ const path = require('path');
 app.set("view engin","ejs");
 app.set("views",path.join(__dirname,"/views"));
 
+// ejs-mate
+const ejsMate = require('ejs-mate');
+app.engine('ejs',ejsMate);
+
+// Serving Statice Files (public)
+app.use(express.static("public"));
+app.use(express.static(path.join(__dirname,"/public")));
+
+
 // Handling post 
 app.use(express.urlencoded({extended:true}));
 

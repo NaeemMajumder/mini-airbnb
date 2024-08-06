@@ -39,17 +39,39 @@ async function main(){
 const Listing = require('./models/listing.js');
 const { disconnect } = require("process");
 
+// Wrap Async Function
+const wrapAsync = require('./utils/wrapAsync.js');
+
+// Express Class Error
+const ExpressError = require("./utils/ExpressError.js");
+const { stat } = require("fs");
+
+// Listing Schema (Joi)
+const {listingSchema} = require("./schema.js");
+
+// Schema validation middleware
+const validateListing = (request,response,next)=>{
+    let result = listingSchema.validate(request.body);
+    console.log(result);
+    if(result.error){
+        let errMsg = result.error.details.map((el)=> el.message).join(",");
+        throw new ExpressError(400,result.error);
+    }else{
+        next();
+    }
+}
+
 //Root Route
 app.get("/",(request,response)=>{
    response.send("work successfully");
 });
 
 // Index Route
-app.get("/listing",async (request,response)=>{
+app.get("/listing",wrapAsync(async (request,response)=>{
     let listings = await Listing.find({});
 
     response.render("listings/index.ejs",{listings});
-});
+}));
 
 // New Route
 app.get("/listing/new",(request,response)=>{
@@ -57,54 +79,54 @@ app.get("/listing/new",(request,response)=>{
 });
 
 // Show Route
-app.get("/listing/:id",async (request,response)=>{
+app.get("/listing/:id",wrapAsync(async (request,response)=>{
     let {id} = request.params;
     let list = await Listing.findById(id);
     response.render("listings/show.ejs",{list});
-});
+}));
 
 // Create Route
-app.post("/listing", async (request,response)=>{
-    let {title,description,image,price,location,country} = request.body;
-
-    // console.log(request.body);
-
-    let newList = Listing({
-        title:title,
-        description:description,
-        image:image,
-        price:price,
-        location:location,
-        country:country
-    });
-
-    newList.save();
-
-    response.redirect("/listing");
+app.post("/listing",validateListing, async (request,response,next)=>{
+    try{
+        let {title,description,image,price,location,country} = request.body;
+        // console.log(request.body);
+        let newList = Listing({
+            title:title,
+            description:description,
+            image:image,
+            price:price,
+            location:location,
+            country:country
+        });
+        await newList.save();
+        response.redirect("/listing");
+    }catch(error){
+        next(error);
+    }
 });
 
 // Edit Route
-app.get("/listing/:id/edit",async(request,response)=>{
+app.get("/listing/:id/edit", wrapAsync(async(request,response)=>{
     let {id} = request.params;
     let list = await Listing.findById(id);
 
     response.render("listings/edit.ejs",{list});
-});
+}));
 
-app.put("/listing/:id",async (request,response)=>{
+app.put("/listing/:id",validateListing ,wrapAsync(async (request,response)=>{
     let {id} = request.params;
     let list = await Listing.findByIdAndUpdate(id,{...request.body.listing});
-    // console.log(list);
+    console.log(list);
     response.redirect(`/listing/${id}`);
-});
+}));
 
 // Delete Route
-app.delete("/listing/:id",async (request,response)=>{
+app.delete("/listing/:id",wrapAsync(async (request,response)=>{
     let {id} = request.params;
     let deletedList = await Listing.findByIdAndDelete(id);
     console.log(deletedList);
     response.redirect("/listing");
-});
+}));
 
 
 // Testing Route
@@ -119,9 +141,18 @@ app.delete("/listing/:id",async (request,response)=>{
 //     list1.save();
 //     console.log(list1);
 //     response.send("list successfully saved");
-// })
+// });
 
+app.all("*",(request,response,next)=>{
+    next(new ExpressError(404, "Page not found!"));
+});
 
+app.use((error,request,response,next)=>{
+    let {statusCode=500, message="Something went wrong!"} = error;
+    response.status(statusCode).render("error.ejs",{message});
+    // response.status(statusCode).send(message);
+    // response.send("Something Went wrong");
+});
 
 app.listen(8080,()=>{
     console.log("Port 8080 is listening");
